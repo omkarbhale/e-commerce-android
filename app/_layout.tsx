@@ -1,14 +1,19 @@
-import { Slot, Stack, Tabs } from 'expo-router';
+import { Slot, Stack, Tabs, useRouter } from 'expo-router';
+import { useEffect } from 'react';
 import { Text, View } from 'react-native';
 
+const isLoggedIn = false;
+
 export default function Layout() {
-  return <View style={{flex: 1}}>
-    <Text style={{fontSize: 45}}>Header Area</Text>
-    <Text>Header Area</Text>
-    <Text>Header Area</Text>
-    <Slot />
-    <Text>Footer area</Text>
-    <Text>Footer area</Text>
-    <Text style={{fontSize: 45}}>Header Area</Text>
-  </View>
+  const router = useRouter()
+
+  useEffect(() => {
+    if (!isLoggedIn) {
+      router.replace("/login/login1");
+    } else {
+      router.replace("/+not-found");
+    }
+  })
+
+  return <Slot />
 }
