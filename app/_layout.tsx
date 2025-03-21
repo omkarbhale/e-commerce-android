@@ -1,6 +1,5 @@
-import { Slot, Stack, Tabs, useRouter } from "expo-router";
+import { Slot, useRouter } from "expo-router";
 import { useEffect } from "react";
-import { Text, View } from "react-native";
 
 const isLoggedIn = false;
 
