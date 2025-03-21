@@ -9,7 +9,7 @@ export default function Layout() {
 
 	useEffect(() => {
 		if (!isLoggedIn) {
-			router.replace("/login/login1");
+			router.replace("/login/customerlogin");
 		} else {
 			router.replace("/+not-found");
 		}
