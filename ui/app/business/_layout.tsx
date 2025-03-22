@@ -52,6 +52,9 @@ export default function LoginLayout() {
 					),
 				}}
 			/>
+
+			{/* Hides tab */}
+			<Tabs.Screen name="[productId]" options={{ href: null }} />
 		</Tabs>
 	);
 }
