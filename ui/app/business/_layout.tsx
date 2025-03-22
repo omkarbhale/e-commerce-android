@@ -1,5 +1,10 @@
 import { Tabs } from "expo-router";
-import { AntDesign, Fontisto, Ionicons } from "react-native-vector-icons"; // Import Ionicons
+import {
+	AntDesign,
+	Entypo,
+	Fontisto,
+	Ionicons,
+} from "react-native-vector-icons"; // Import Ionicons
 
 export default function LoginLayout() {
 	return (
@@ -7,7 +12,7 @@ export default function LoginLayout() {
 			<Tabs.Screen
 				name="dashboard"
 				options={{
-					title: "Dashboard",
+					title: "Business Dashboard",
 					tabBarIcon: ({ color, size }) => (
 						<AntDesign name="dashboard" size={size} color={color} />
 					),
@@ -24,6 +29,16 @@ export default function LoginLayout() {
 							size={size}
 							color={color}
 						/>
+					),
+				}}
+			/>
+
+			<Tabs.Screen
+				name="browseproducts"
+				options={{
+					title: "Browse Products",
+					tabBarIcon: ({ color, size }) => (
+						<Entypo name="list" size={size} color={color} />
 					),
 				}}
 			/>
