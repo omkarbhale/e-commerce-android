@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { View, Text, FlatList, StyleSheet, Alert } from "react-native";
 import { serverUrl, loggingEnabled } from "@/constants";
 import { useAuth } from "@/contexts/AuthenticationContext";
+import { useProductContext } from "@/contexts/ProductContext";
 
 type DataItem = {
 	label: string;
@@ -22,6 +23,7 @@ const renderItem = ({ item }: { item: DataItem }) => (
 
 export default function Dashboard() {
 	const { token, user } = useAuth();
+	const { products } = useProductContext();
 	const [dashboardData, setDashboardData] = useState<DataItem[]>([]);
 
 	useEffect(() => {
@@ -89,7 +91,7 @@ export default function Dashboard() {
 		};
 
 		fetchDashboardData();
-	}, [token, user]);
+	}, [token, user, products]);
 
 	return (
 		<View style={styles.container}>
