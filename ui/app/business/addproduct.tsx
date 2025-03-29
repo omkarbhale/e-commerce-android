@@ -11,6 +11,7 @@ import {
 import * as ImagePicker from "expo-image-picker";
 import { serverUrl, loggingEnabled } from "@/constants";
 import { useAuth } from "@/contexts/AuthenticationContext";
+import { useProductContext } from "@/contexts/ProductContext";
 
 const AddProduct = () => {
 	const [productName, setProductName] = useState<string>("");
@@ -19,6 +20,7 @@ const AddProduct = () => {
 	const [imageUri, setImageUri] = useState<string>("");
 
 	const { user } = useAuth();
+	const { setProducts } = useProductContext();
 
 	const pickImage = async () => {
 		const { status } =
@@ -65,6 +67,7 @@ const AddProduct = () => {
 
 		if (response.ok) {
 			Alert.alert("Success", "Product added successfully");
+			setProducts((prevProducts) => [...prevProducts, data]);
 		} else {
 			Alert.alert(
 				"Error",

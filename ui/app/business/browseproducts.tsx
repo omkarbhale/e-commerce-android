@@ -1,14 +1,15 @@
 import { View, Text, Alert } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import ProductList, { Product } from "@/components/BusinessProductList";
 import { useRouter } from "expo-router";
 import { serverUrl, loggingEnabled } from "@/constants";
 import { useAuth } from "@/contexts/AuthenticationContext";
+import { useProductContext } from "@/contexts/ProductContext";
 
 export default function BrowseProducts() {
 	const router = useRouter();
 	const { user, token } = useAuth();
-	const [products, setProducts] = useState<Product[]>([]);
+	const { products, setProducts } = useProductContext();
 
 	useEffect(() => {
 		const fetchProducts = async () => {
@@ -39,7 +40,7 @@ export default function BrowseProducts() {
 		};
 
 		fetchProducts();
-	}, [user, token]);
+	}, [user, token, setProducts]);
 
 	const handleDeleteProduct = async (product: Product) => {
 		try {
