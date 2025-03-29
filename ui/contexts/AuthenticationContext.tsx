@@ -6,7 +6,12 @@ interface AuthContextProps {
 	isLoggedIn: boolean;
 	role: UserRole;
 	token: string | null;
-	login: (role: UserRole, token: string) => void;
+	user: { id: number; name: string; email: string } | null; // Add user object
+	login: (
+		role: UserRole,
+		token: string,
+		user: { id: number; name: string; email: string },
+	) => void; // Update login signature
 	logout: () => void;
 }
 
@@ -20,22 +25,33 @@ export const AuthenticationProvider: React.FC<{ children: ReactNode }> = ({
 	const [isLoggedIn, setIsLoggedIn] = useState(false);
 	const [role, setRole] = useState<UserRole>(null);
 	const [token, setToken] = useState<string | null>(null);
+	const [user, setUser] = useState<{
+		id: number;
+		name: string;
+		email: string;
+	} | null>(null); // Add user state
 
-	const login = (role: UserRole, token: string) => {
+	const login = (
+		role: UserRole,
+		token: string,
+		user: { id: number; name: string; email: string },
+	) => {
 		setIsLoggedIn(true);
 		setRole(role);
 		setToken(token);
+		setUser(user); // Store user object
 	};
 
 	const logout = () => {
 		setIsLoggedIn(false);
 		setRole(null);
 		setToken(null);
+		setUser(null); // Clear user object
 	};
 
 	return (
 		<AuthenticationContext.Provider
-			value={{ isLoggedIn, role, token, login, logout }}>
+			value={{ isLoggedIn, role, token, user, login, logout }}>
 			{children}
 		</AuthenticationContext.Provider>
 	);

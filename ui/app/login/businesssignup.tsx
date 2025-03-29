@@ -29,7 +29,11 @@ export default function BusinessSignup() {
 			if (loggingEnabled) console.log("BusinessSignup: data =", data);
 
 			if (response.ok) {
-				login("business", data.token);
+				login("business", data.token, {
+					id: data.business.id,
+					name: data.business.name,
+					email: data.business.email,
+				}); // Pass user object to context
 				Alert.alert("Success", "Signup successful");
 			} else {
 				Alert.alert(

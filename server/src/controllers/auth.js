@@ -35,9 +35,15 @@ const businessSignup = async (req, res) => {
 			email,
 			password: hashedPassword,
 		});
+		const token = generateToken(business, "business");
 		res.status(201).json({
 			message: "Business registered successfully",
-			business,
+			business: {
+				id: business.id,
+				name: business.name,
+				email: business.email,
+			},
+			token,
 		});
 	} catch (error) {
 		res.status(500).json({
@@ -60,7 +66,15 @@ const businessLogin = async (req, res) => {
 			return res.status(401).json({ error: "Invalid credentials" });
 		}
 		const token = generateToken(business, "business");
-		res.status(200).json({ message: "Login successful", token });
+		res.status(200).json({
+			message: "Login successful",
+			token,
+			business: {
+				id: business.id,
+				name: business.name,
+				email: business.email,
+			},
+		});
 	} catch (error) {
 		res.status(500).json({ error: "Login failed", details: error.message });
 	}
@@ -75,9 +89,15 @@ const customerSignup = async (req, res) => {
 			email,
 			password: hashedPassword,
 		});
+		const token = generateToken(customer, "customer");
 		res.status(201).json({
 			message: "Customer registered successfully",
-			customer,
+			customer: {
+				id: customer.id,
+				name: customer.name,
+				email: customer.email,
+			},
+			token,
 		});
 	} catch (error) {
 		res.status(500).json({
@@ -95,7 +115,15 @@ const customerLogin = async (req, res) => {
 			return res.status(401).json({ error: "Invalid credentials" });
 		}
 		const token = generateToken(customer, "customer");
-		res.status(200).json({ message: "Login successful", token });
+		res.status(200).json({
+			message: "Login successful",
+			token,
+			customer: {
+				id: customer.id,
+				name: customer.name,
+				email: customer.email,
+			},
+		});
 	} catch (error) {
 		res.status(500).json({ error: "Login failed", details: error.message });
 	}

@@ -27,9 +27,12 @@ export default function BusinessLogin() {
 			if (loggingEnabled) console.log("BusinessLogin: data =", data);
 
 			if (response.ok) {
-				login("business", data.token); // Update context
+				login("business", data.token, {
+					id: data.business.id,
+					name: data.business.name,
+					email: data.business.email,
+				}); // Pass user object to context
 				Alert.alert("Success", "Login successful");
-				// router.push("/business/dashboard"); // Navigate to dashboard
 			} else {
 				Alert.alert(
 					"Error",

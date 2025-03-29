@@ -25,7 +25,11 @@ export default function CustomerLogin() {
 			if (loggingEnabled) console.log("CustomerLogin: data =", data);
 
 			if (response.ok) {
-				login("customer", data.token); // Update context
+				login("customer", data.token, {
+					id: data.customer.id,
+					name: data.customer.name,
+					email: data.customer.email,
+				}); // Pass user object to context
 				Alert.alert("Success", "Login successful");
 			} else {
 				Alert.alert(

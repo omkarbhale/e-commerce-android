@@ -26,7 +26,11 @@ export default function CustomerSignup() {
 		if (loggingEnabled) console.log("CustomerSignup: data =", data);
 
 		if (response.ok) {
-			login("customer", data.token); // Update context
+			login("customer", data.token, {
+				id: data.customer.id,
+				name: data.customer.name,
+				email: data.customer.email,
+			}); // Pass user object to context
 			Alert.alert("Success", "Signup successful");
 		} else {
 			Alert.alert(
