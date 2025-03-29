@@ -1,7 +1,7 @@
 const { Op, fn, col, literal } = require("sequelize");
 const { models } = require("../database/db");
 
-const { Product, Transaction } = models;
+const { Product, Transaction, Business } = models;
 
 const getBusinessDashboard = async (req, res) => {
 	try {
@@ -9,6 +9,14 @@ const getBusinessDashboard = async (req, res) => {
 
 		if (!businessId) {
 			return res.status(400).json({ error: "Business ID is required" });
+		}
+
+		// Check if the business ID exists
+		const businessExists = await Business.findByPk(businessId);
+		if (!businessExists) {
+			return res
+				.status(404)
+				.json({ error: "Business ID does not exist" });
 		}
 
 		const totalProductsSold = await Transaction.sum("quantity", {

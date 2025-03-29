@@ -39,6 +39,12 @@ const { getBusinessDashboard } = require("../controllers/dashboard");
  *           application/json:
  *             example:
  *               error: "Business ID is required"
+ *       404:
+ *         description: Business ID does not exist
+ *         content:
+ *           application/json:
+ *             example:
+ *               error: "Business ID does not exist"
  *       500:
  *         description: Failed to fetch dashboard data
  *         content:
