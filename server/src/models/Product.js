@@ -1,6 +1,4 @@
 module.exports = (sequelize, DataTypes) => {
-	const Business = require("./Business");
-
 	const Product = sequelize.define("Product", {
 		name: {
 			type: DataTypes.STRING,
@@ -13,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
 		businessId: {
 			type: DataTypes.INTEGER,
 			references: {
-				model: Business,
+				model: "Businesses", // Name of the table in the database
 				key: "id",
 			},
 			onDelete: "CASCADE",
@@ -22,6 +20,10 @@ module.exports = (sequelize, DataTypes) => {
 	});
 
 	Product.associate = (models) => {
+		Product.belongsTo(models.Business, {
+			foreignKey: "businessId",
+			onDelete: "CASCADE",
+		});
 		Product.hasMany(models.Transaction, {
 			foreignKey: "productId",
 			onDelete: "CASCADE",
