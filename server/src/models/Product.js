@@ -1,6 +1,7 @@
 const { DataTypes } = require("sequelize");
 const { sequelize } = require("../database/db");
 const Business = require("./Business");
+const Transaction = require("./Transaction");
 
 const Product = sequelize.define("Product", {
 	name: {
@@ -21,5 +22,9 @@ const Product = sequelize.define("Product", {
 		allowNull: false,
 	},
 });
+
+Product.hasMany(Transaction, { foreignKey: "productId", onDelete: "CASCADE" });
+Transaction.belongsTo(Product, { foreignKey: "productId" });
+Product.hasMany(Transaction, { foreignKey: "productId", onDelete: "CASCADE" });
 
 module.exports = Product;

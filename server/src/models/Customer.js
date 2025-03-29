@@ -1,5 +1,6 @@
 const { DataTypes } = require("sequelize");
 const { sequelize } = require("../database/db");
+const Transaction = require("./Transaction");
 
 const Customer = sequelize.define("Customer", {
 	name: {
@@ -15,6 +16,16 @@ const Customer = sequelize.define("Customer", {
 		allowNull: false,
 	},
 	/* Can add more fields such as address, category, etc. */
+});
+
+Customer.hasMany(Transaction, {
+	foreignKey: "customerId",
+	onDelete: "CASCADE",
+});
+Transaction.belongsTo(Customer, { foreignKey: "customerId" });
+Customer.hasMany(Transaction, {
+	foreignKey: "customerId",
+	onDelete: "CASCADE",
 });
 
 module.exports = Customer;

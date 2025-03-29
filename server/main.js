@@ -7,7 +7,11 @@ app.use(express.urlencoded());
 app.use(express.json());
 
 const authRouter = require("./src/routes/auth");
+const productRouter = require("./src/routes/product");
+const transactionsRouter = require("./src/routes/transactions");
 app.use("/auth", authRouter);
+app.use("/product", productRouter);
+app.use("/transactions", transactionsRouter);
 
 const run = async () => {
 	await require("./src/database/db").sequelize.sync();
