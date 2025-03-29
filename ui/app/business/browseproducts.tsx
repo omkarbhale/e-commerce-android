@@ -1,26 +1,47 @@
 import { View, Text } from "react-native";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import ProductList, { Product } from "@/components/BusinessProductList";
 import { useRouter } from "expo-router";
-
-const products = [
-	{ id: "1", name: "Wireless Headphones", price: 59.99 },
-	{ id: "2", name: "Gaming Mouse", price: 29.99 },
-	{ id: "3", name: "Smartwatch", price: 99.99 },
-	{ id: "4", name: "Wireless Headphones", price: 59.99 },
-	{ id: "5", name: "Gaming Mouse", price: 29.99 },
-	{ id: "6", name: "Smartwatch", price: 99.99 },
-];
+import { serverUrl, loggingEnabled } from "@/constants";
+import { useAuth } from "@/contexts/AuthenticationContext";
 
 export default function BrowseProducts() {
 	const router = useRouter();
+	const { user, token } = useAuth();
+	const [products, setProducts] = useState<Product[]>([]);
+
+	useEffect(() => {
+		const fetchProducts = async () => {
+			if (!user?.id) return;
+
+			try {
+				const response = await fetch(
+					`${serverUrl}/product/business/${user.id}`,
+					{
+						method: "GET",
+						headers: {
+							Authorization: `Bearer ${token}`,
+						},
+					},
+				);
+				const data = await response.json();
+
+				if (loggingEnabled) console.log("Fetched products:", data);
+
+				if (response.ok) {
+					setProducts(data);
+				} else {
+					console.error("Failed to fetch products", data);
+				}
+			} catch (error) {
+				console.error("Error fetching products:", error);
+			}
+		};
+
+		fetchProducts();
+	}, [user, token]);
 
 	const handleProductPress = (product: Product) => {
-		// Alert.alert(
-		// 	"Product Selected",
-		// 	`${product.name} - $${product.price.toFixed(2)}`,
-		// );
-
 		router.push(`/business/${product.id}`);
 	};
 
