@@ -1,23 +1,62 @@
-import { View, Text, TextInput, Button, StyleSheet } from "react-native";
-import React from "react";
+import { View, Text, TextInput, Button, StyleSheet, Alert } from "react-native";
+import React, { useState } from "react";
+import { serverUrl } from "@/constants"; // Import serverUrl
 
 export default function CustomerSignup() {
+	const [name, setName] = useState("");
+	const [email, setEmail] = useState("");
+	const [password, setPassword] = useState("");
+
+	const handleSignup = async () => {
+		console.log("CustomerSignup: handleSignup called");
+		console.log("CustomerSignup: name =", name);
+		console.log("CustomerSignup: email =", email);
+		console.log("CustomerSignup: password =", password);
+
+		const response = await fetch(`${serverUrl}/auth/customer/signup`, {
+			method: "POST",
+			headers: { "Content-Type": "application/json" },
+			body: JSON.stringify({ name, email, password }),
+		});
+		const data = await response.json();
+		console.log("CustomerSignup: response =", response);
+		console.log("CustomerSignup: data =", data);
+
+		if (response.ok) {
+			Alert.alert("Success", "Signup successful");
+		} else {
+			Alert.alert("Error", data.error || "Signup failed");
+		}
+	};
+
 	return (
 		<View style={styles.container}>
 			<Text style={styles.header}>Customer Signup</Text>
 			<View style={styles.form}>
-				<TextInput style={styles.input} placeholder="Username" />
+				<TextInput
+					style={styles.input}
+					placeholder="Name"
+					value={name}
+					onChangeText={setName}
+				/>
+				<TextInput
+					style={styles.input}
+					placeholder="Email"
+					value={email}
+					onChangeText={setEmail}
+				/>
 				<TextInput
 					style={styles.input}
 					placeholder="Password"
 					secureTextEntry={true}
+					value={password}
+					onChangeText={setPassword}
 				/>
-				<TextInput
-					style={styles.input}
-					placeholder="Confirm Password"
-					secureTextEntry={true}
+				<Button
+					title="Sign Up"
+					color="#4CAF50"
+					onPress={handleSignup}
 				/>
-				<Button title="Sign Up" color="#4CAF50" />
 			</View>
 		</View>
 	);

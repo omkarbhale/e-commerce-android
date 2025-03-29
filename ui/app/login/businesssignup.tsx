@@ -1,23 +1,67 @@
-import { View, Text, TextInput, Button, StyleSheet } from "react-native";
-import React from "react";
+import { View, Text, TextInput, Button, StyleSheet, Alert } from "react-native";
+import React, { useState } from "react";
+import { serverUrl } from "@/constants"; // Import serverUrl
 
 export default function BusinessSignup() {
+	const [name, setName] = useState("");
+	const [email, setEmail] = useState("");
+	const [password, setPassword] = useState("");
+
+	const handleSignup = async () => {
+		console.log("BusinessSignup: handleSignup called");
+		console.log("BusinessSignup: name =", name);
+		console.log("BusinessSignup: email =", email);
+		console.log("BusinessSignup: password =", password);
+
+		try {
+			const response = await fetch(`${serverUrl}/auth/business/signup`, {
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify({ name, email, password }),
+			});
+			const data = await response.json();
+			console.log("BusinessSignup: response =", response);
+			console.log("BusinessSignup: data =", data);
+
+			if (response.ok) {
+				Alert.alert("Success", "Signup successful");
+			} else {
+				Alert.alert("Error", data.error || "Signup failed");
+			}
+		} catch (error) {
+			console.error("BusinessSignup: error =", error);
+			Alert.alert("Error", "An error occurred during signup");
+		}
+	};
+
 	return (
 		<View style={styles.container}>
 			<Text style={styles.header}>Business Signup</Text>
 			<View style={styles.form}>
-				<TextInput style={styles.input} placeholder="Business Name" />
+				<TextInput
+					style={styles.input}
+					placeholder="Name"
+					value={name}
+					onChangeText={setName}
+				/>
+				<TextInput
+					style={styles.input}
+					placeholder="Email"
+					value={email}
+					onChangeText={setEmail}
+				/>
 				<TextInput
 					style={styles.input}
 					placeholder="Password"
 					secureTextEntry={true}
+					value={password}
+					onChangeText={setPassword}
 				/>
-				<TextInput
-					style={styles.input}
-					placeholder="Confirm Password"
-					secureTextEntry={true}
+				<Button
+					title="Sign Up"
+					color="#4CAF50"
+					onPress={handleSignup}
 				/>
-				<Button title="Sign Up" color="#4CAF50" />
 			</View>
 		</View>
 	);
