@@ -1,8 +1,10 @@
 import { View, Text, TextInput, Button, StyleSheet, Alert } from "react-native";
 import React, { useState } from "react";
 import { serverUrl, loggingEnabled } from "@/constants"; // Import serverUrl and loggingEnabled
+import { useRouter } from "expo-router"; // Import useRouter
 
 export default function BusinessSignup() {
+	const router = useRouter(); // Initialize router
 	const [name, setName] = useState("");
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
@@ -26,6 +28,7 @@ export default function BusinessSignup() {
 
 			if (response.ok) {
 				Alert.alert("Success", "Signup successful");
+				router.push("/business/dashboard"); // Navigate to dashboard
 			} else {
 				Alert.alert(
 					"Error",
