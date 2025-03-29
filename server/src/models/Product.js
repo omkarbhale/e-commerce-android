@@ -25,6 +25,5 @@ const Product = sequelize.define("Product", {
 
 Product.hasMany(Transaction, { foreignKey: "productId", onDelete: "CASCADE" });
 Transaction.belongsTo(Product, { foreignKey: "productId" });
-Product.hasMany(Transaction, { foreignKey: "productId", onDelete: "CASCADE" });
 
 module.exports = Product;
