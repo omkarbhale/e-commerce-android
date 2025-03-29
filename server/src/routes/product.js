@@ -3,6 +3,7 @@ const {
 	addProduct,
 	getAllProducts,
 	getProductsByBusinessId,
+	deleteProduct,
 } = require("../controllers/product.js");
 
 /**
@@ -132,8 +133,31 @@ const {
  *       500:
  *         description: Failed to fetch products
  */
+
+/**
+ * @swagger
+ * /product/{productId}:
+ *   delete:
+ *     summary: Delete a product by ID
+ *     tags: [Product]
+ *     parameters:
+ *       - in: path
+ *         name: productId
+ *         required: true
+ *         schema:
+ *           type: integer
+ *           example: 1
+ *     responses:
+ *       200:
+ *         description: Product deleted successfully
+ *       400:
+ *         description: Bad request
+ *       500:
+ *         description: Failed to delete product
+ */
 router.post("/", addProduct);
 router.get("/", getAllProducts);
 router.get("/business/:businessId", getProductsByBusinessId);
+router.delete("/:productId", deleteProduct);
 
 module.exports = router;

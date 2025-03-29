@@ -1,5 +1,12 @@
 import React from "react";
-import { FlatList, View, Text, Pressable, StyleSheet } from "react-native";
+import {
+	FlatList,
+	View,
+	Text,
+	Pressable,
+	StyleSheet,
+	Button,
+} from "react-native";
 
 export interface Product {
 	id: string;
@@ -9,23 +16,25 @@ export interface Product {
 
 interface ProductListProps {
 	products: Product[];
-	onProductPress: (product: Product) => void;
+	onDeleteProduct: (product: Product) => void;
 }
 
 const ProductList: React.FC<ProductListProps> = ({
 	products,
-	onProductPress,
+	onDeleteProduct,
 }) => {
 	const renderItem = ({ item }: { item: Product }) => (
-		<Pressable
-			onPress={() => onProductPress(item)}
-			style={({ pressed }) => [
-				styles.card,
-				pressed && { backgroundColor: "#f0f0f0" },
-			]}>
-			<Text style={styles.name}>{item.name}</Text>
-			<Text style={styles.price}>${item.price.toFixed(2)}</Text>
-		</Pressable>
+		<View style={styles.card}>
+			<View style={styles.infoContainer}>
+				<Text style={styles.name}>{item.name}</Text>
+				<Text style={styles.price}>${item.price.toFixed(2)}</Text>
+			</View>
+			<Button
+				title="Delete"
+				color="red"
+				onPress={() => onDeleteProduct(item)}
+			/>
+		</View>
 	);
 
 	return (
@@ -51,6 +60,12 @@ const styles = StyleSheet.create({
 		shadowOpacity: 0.1,
 		shadowRadius: 8,
 		elevation: 3,
+		flexDirection: "row",
+		justifyContent: "space-between",
+		alignItems: "center",
+	},
+	infoContainer: {
+		flex: 1,
 	},
 	name: {
 		fontSize: 16,

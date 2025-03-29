@@ -1,6 +1,4 @@
 module.exports = (sequelize, DataTypes) => {
-	const Customer = require("./Customer");
-
 	const Transaction = sequelize.define("Transaction", {
 		productId: {
 			type: DataTypes.INTEGER,
@@ -13,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
 		customerId: {
 			type: DataTypes.INTEGER,
 			references: {
-				model: Customer,
+				model: sequelize.models.Customer, // Updated to use sequelize.models
 				key: "id",
 			},
 			allowNull: false,

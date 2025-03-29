@@ -1,4 +1,4 @@
-import { View, Text } from "react-native";
+import { View, Text, Alert } from "react-native";
 import React, { useEffect, useState } from "react";
 import ProductList, { Product } from "@/components/BusinessProductList";
 import { useRouter } from "expo-router";
@@ -41,8 +41,34 @@ export default function BrowseProducts() {
 		fetchProducts();
 	}, [user, token]);
 
-	const handleProductPress = (product: Product) => {
-		router.push(`/business/${product.id}`);
+	const handleDeleteProduct = async (product: Product) => {
+		try {
+			const response = await fetch(`${serverUrl}/product/${product.id}`, {
+				method: "DELETE",
+				headers: {
+					Authorization: `Bearer ${token}`,
+				},
+			});
+			if (response.ok) {
+				setProducts((prevProducts) =>
+					prevProducts.filter((p) => p.id !== product.id),
+				);
+				Alert.alert("Success", "Product deleted successfully");
+				if (loggingEnabled) console.log("Product deleted successfully");
+			} else {
+				const data = await response.json();
+				Alert.alert(
+					"Error",
+					`Failed to delete product: ${data.error || "Unknown error"}\nDetails: ${
+						data.details || "No additional details"
+					}`,
+				);
+				console.error("Failed to delete product", data);
+			}
+		} catch (error: any) {
+			Alert.alert("Error", `Error deleting product: ${error.message}`);
+			console.error("Error deleting product:", error);
+		}
 	};
 
 	return (
@@ -57,7 +83,7 @@ export default function BrowseProducts() {
 			</Text>
 			<ProductList
 				products={products}
-				onProductPress={handleProductPress}
+				onDeleteProduct={handleDeleteProduct}
 			/>
 		</View>
 	);

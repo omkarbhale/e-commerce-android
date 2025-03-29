@@ -15,5 +15,12 @@ module.exports = (sequelize, DataTypes) => {
 		/* Can add more fields such as address, category, etc. */
 	});
 
+	Business.associate = (models) => {
+		Business.hasMany(models.Product, {
+			foreignKey: "businessId",
+			onDelete: "CASCADE",
+		});
+	};
+
 	return Business;
 };
