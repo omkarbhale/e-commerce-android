@@ -59,6 +59,12 @@ const getBusinessDashboard = async (req, res) => {
 			],
 		});
 
+		const totalProductsAdded = await Product.count({
+			where: {
+				businessId: businessId,
+			},
+		});
+
 		const topProducts = await Transaction.findAll({
 			attributes: [
 				"productId",
@@ -82,6 +88,7 @@ const getBusinessDashboard = async (req, res) => {
 			totalProductsSold: totalProductsSold || 0,
 			totalRevenue: totalRevenue || 0,
 			revenuePastMonth: revenuePastMonth || 0,
+			totalProductsAdded: totalProductsAdded || 0,
 			topProducts: topProducts.map((item) => ({
 				productId: item.productId,
 				productName: item.Product.name,

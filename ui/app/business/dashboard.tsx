@@ -43,13 +43,17 @@ export default function Dashboard() {
 					console.log("Dashboard: response =", response);
 				if (loggingEnabled) console.log("Dashboard: data =", data);
 
-				// Showing only top 1 product out of recevied top 3, if it exists
+				// Showing only top 1 product out of received top 3, if it exists
 				if (data.topProducts && data.topProducts.length > 0) {
 					data.topProducts = [data.topProducts[0]];
 				}
 
 				if (response.ok) {
 					setDashboardData([
+						{
+							label: "Total Products Added",
+							value: data.totalProductsAdded,
+						},
 						{
 							label: "Total Products Sold",
 							value: data.totalProductsSold,
