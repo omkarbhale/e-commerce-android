@@ -1,33 +1,47 @@
-import { View, TextInput, Button } from "react-native";
+import { View, Text, TextInput, Button, StyleSheet } from "react-native";
 import React from "react";
 
-export default function NotFoundScreen() {
+export default function CustomerLogin() {
 	return (
-		<View
-			style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
-		>
-			<View style={{ padding: 6, width: "70%", gap: 2 }}>
+		<View style={styles.container}>
+			<Text style={styles.header}>Customer Login</Text>
+			<View style={styles.form}>
+				<TextInput style={styles.input} placeholder="Username" />
 				<TextInput
-					style={{
-						borderWidth: 1,
-						borderColor: "gray",
-						borderRadius: 4,
-					}}
-					placeholder="Customer Username"
-				/>
-				<TextInput
-					style={{
-						borderWidth: 1,
-						borderColor: "gray",
-						borderRadius: 4,
-					}}
+					style={styles.input}
 					placeholder="Password"
 					secureTextEntry={true}
 				/>
-				<View style={{ borderRadius: 4 }}>
-					<Button title="Log In"></Button>
-				</View>
+				<Button title="Log In" color="#007BFF" />
 			</View>
 		</View>
 	);
 }
+
+const styles = StyleSheet.create({
+	container: {
+		flex: 1,
+		backgroundColor: "#f8f9fa",
+		justifyContent: "center",
+		alignItems: "center",
+		padding: 16,
+	},
+	header: {
+		fontSize: 24,
+		fontWeight: "bold",
+		marginBottom: 20,
+		color: "#333",
+	},
+	form: {
+		width: "100%",
+		maxWidth: 400,
+	},
+	input: {
+		borderWidth: 1,
+		borderColor: "#ccc",
+		borderRadius: 8,
+		padding: 12,
+		marginBottom: 12,
+		backgroundColor: "#fff",
+	},
+});
