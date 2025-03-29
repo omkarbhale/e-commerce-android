@@ -7,19 +7,12 @@ type DataItem = {
 	value: string | number;
 };
 
-const data: DataItem[] = [
+const dummyData: DataItem[] = [
 	{ label: "Total Sales", value: "$12,345" },
 	{ label: "Orders", value: 245 },
 	{ label: "Products", value: 67 },
 	{ label: "Customers", value: 1234 },
 ];
-
-// const renderItem = ({ item }: { item: DataItem }) => (
-//     <View style={styles.card}>
-//         <Text style={styles.label}>{item.label}</Text>
-//         <Text style={styles.value}>{item.value}</Text>
-//     </View>
-// );
 
 const renderItem = ({ item }: { item: DataItem }) => (
 	<View style={styles.card}>
@@ -38,7 +31,7 @@ export default function Dashboard() {
 			<Text style={styles.title}>Hello (business name here)</Text>
 			{/* <Text style={styles.title}>Business Dashboard</Text> */}
 			<FlatList
-				data={data}
+				data={dummyData}
 				renderItem={renderItem}
 				keyExtractor={(item) => item.label}
 				contentContainerStyle={styles.list}
