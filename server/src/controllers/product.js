@@ -1,6 +1,6 @@
 const { models } = require("../database/db");
 
-const { Product } = models;
+const { Product, Business } = models;
 
 const addProduct = async (req, res) => {
 	try {
@@ -8,6 +8,14 @@ const addProduct = async (req, res) => {
 
 		if (!name || !price || !businessId) {
 			return res.status(400).json({ error: "All fields are required" });
+		}
+
+		const business = await Business.findByPk(businessId);
+		if (!business) {
+			return res.status(404).json({
+				error: "Business not found",
+				details: `No business exists with ID ${businessId}`,
+			});
 		}
 
 		const product = await Product.create({ name, price, businessId });
