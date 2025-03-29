@@ -1,12 +1,12 @@
 import { View, Text, TextInput, Button, StyleSheet, Alert } from "react-native";
 import React, { useState } from "react";
-import { serverUrl, loggingEnabled } from "@/constants"; // Import serverUrl and loggingEnabled
-import { useAuth } from "@/contexts/AuthenticationContext"; // Import useAuth
+import { serverUrl, loggingEnabled } from "@/constants";
+import { useAuth } from "@/contexts/AuthenticationContext";
 
 export default function CustomerLogin() {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
-	const { login } = useAuth(); // Access login from context
+	const { login } = useAuth();
 
 	const handleLogin = async () => {
 		if (loggingEnabled) console.log("CustomerLogin: handleLogin called");
@@ -29,7 +29,7 @@ export default function CustomerLogin() {
 					id: data.customer.id,
 					name: data.customer.name,
 					email: data.customer.email,
-				}); // Pass user object to context
+				});
 				Alert.alert("Success", "Login successful");
 			} else {
 				Alert.alert(

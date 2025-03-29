@@ -16,7 +16,6 @@ const models = {
 	Business: require("../models/Business")(sequelize, DataTypes),
 };
 
-// Call associate methods
 Object.keys(models).forEach((modelName) => {
 	if (models[modelName].associate) {
 		models[modelName].associate(models);

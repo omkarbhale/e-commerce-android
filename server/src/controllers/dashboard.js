@@ -10,7 +10,6 @@ const getBusinessDashboard = async (req, res) => {
 			return res.status(400).json({ error: "Business ID is required" });
 		}
 
-		// Total products sold lifetime
 		const totalProductsSold = await Transaction.sum("quantity", {
 			include: {
 				model: Product,
@@ -18,7 +17,6 @@ const getBusinessDashboard = async (req, res) => {
 			},
 		});
 
-		// Total revenue lifetime
 		const totalRevenue = await Transaction.sum("totalPrice", {
 			include: {
 				model: Product,
@@ -26,7 +24,6 @@ const getBusinessDashboard = async (req, res) => {
 			},
 		});
 
-		// Revenue in the past month
 		const oneMonthAgo = new Date();
 		oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1);
 
@@ -40,7 +37,6 @@ const getBusinessDashboard = async (req, res) => {
 			},
 		});
 
-		// Top 3 products by count
 		const topProducts = await Transaction.findAll({
 			attributes: [
 				"productId",

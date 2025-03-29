@@ -16,7 +16,7 @@ module.exports = (sequelize, DataTypes) => {
 				model: Business,
 				key: "id",
 			},
-			onDelete: "CASCADE", // Ensures related products are deleted if the business is deleted
+			onDelete: "CASCADE",
 			allowNull: false,
 		},
 	});
