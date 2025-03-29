@@ -6,6 +6,14 @@ import {
 } from "@/contexts/AuthenticationContext";
 
 export default function Layout() {
+	return (
+		<AuthenticationProvider>
+			<AuthenticatedContent />
+		</AuthenticationProvider>
+	);
+}
+
+function AuthenticatedContent() {
 	const router = useRouter();
 	const { isLoggedIn, role } = useAuth();
 
@@ -23,9 +31,5 @@ export default function Layout() {
 		}
 	}, [isLoggedIn, role]);
 
-	return (
-		<AuthenticationProvider>
-			<Slot />
-		</AuthenticationProvider>
-	);
+	return <Slot />;
 }
