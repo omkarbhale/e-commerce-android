@@ -1,36 +1,37 @@
-const { DataTypes } = require("sequelize");
-const { sequelize } = require("../database/db");
-const Product = require("./Product");
-const Customer = require("./Customer");
+module.exports = (sequelize, DataTypes) => {
+	const Customer = require("./Customer");
 
-const Transaction = sequelize.define("Transaction", {
-	productId: {
-		type: DataTypes.INTEGER,
-		references: {
-			model: Product,
-			key: "id",
+	const Transaction = sequelize.define("Transaction", {
+		productId: {
+			type: DataTypes.INTEGER,
+			references: {
+				model: sequelize.models.Product,
+				key: "id",
+			},
+			allowNull: false,
 		},
-		allowNull: false,
-	},
-	customerId: {
-		type: DataTypes.INTEGER,
-		references: {
-			model: Customer,
-			key: "id",
+		customerId: {
+			type: DataTypes.INTEGER,
+			references: {
+				model: Customer,
+				key: "id",
+			},
+			allowNull: false,
 		},
-		allowNull: false,
-	},
-	quantity: {
-		type: DataTypes.INTEGER,
-		allowNull: false,
-	},
-	totalPrice: {
-		type: DataTypes.BIGINT,
-		allowNull: false,
-	},
-});
+		quantity: {
+			type: DataTypes.INTEGER,
+			allowNull: false,
+		},
+		totalPrice: {
+			type: DataTypes.BIGINT,
+			allowNull: false,
+		},
+	});
 
-Transaction.belongsTo(Product, { foreignKey: "productId" });
-Transaction.belongsTo(Customer, { foreignKey: "customerId" });
+	Transaction.associate = (models) => {
+		Transaction.belongsTo(models.Product, { foreignKey: "productId" });
+		Transaction.belongsTo(models.Customer, { foreignKey: "customerId" });
+	};
 
-module.exports = Transaction;
+	return Transaction;
+};
