@@ -1,6 +1,6 @@
 import { View, Text, TextInput, Button, StyleSheet, Alert } from "react-native";
 import React, { useState } from "react";
-import { serverUrl } from "@/constants"; // Import serverUrl
+import { serverUrl, loggingEnabled } from "@/constants"; // Import serverUrl and loggingEnabled
 
 export default function BusinessSignup() {
 	const [name, setName] = useState("");
@@ -8,10 +8,10 @@ export default function BusinessSignup() {
 	const [password, setPassword] = useState("");
 
 	const handleSignup = async () => {
-		console.log("BusinessSignup: handleSignup called");
-		console.log("BusinessSignup: name =", name);
-		console.log("BusinessSignup: email =", email);
-		console.log("BusinessSignup: password =", password);
+		if (loggingEnabled) console.log("BusinessSignup: handleSignup called");
+		if (loggingEnabled) console.log("BusinessSignup: name =", name);
+		if (loggingEnabled) console.log("BusinessSignup: email =", email);
+		if (loggingEnabled) console.log("BusinessSignup: password =", password);
 
 		try {
 			const response = await fetch(`${serverUrl}/auth/business/signup`, {
@@ -20,8 +20,9 @@ export default function BusinessSignup() {
 				body: JSON.stringify({ name, email, password }),
 			});
 			const data = await response.json();
-			console.log("BusinessSignup: response =", response);
-			console.log("BusinessSignup: data =", data);
+			if (loggingEnabled)
+				console.log("BusinessSignup: response =", response);
+			if (loggingEnabled) console.log("BusinessSignup: data =", data);
 
 			if (response.ok) {
 				Alert.alert("Success", "Signup successful");
@@ -34,7 +35,7 @@ export default function BusinessSignup() {
 				);
 			}
 		} catch (error) {
-			console.error("BusinessSignup: error =", error);
+			if (loggingEnabled) console.error("BusinessSignup: error =", error);
 			Alert.alert("Error", "An error occurred during signup");
 		}
 	};

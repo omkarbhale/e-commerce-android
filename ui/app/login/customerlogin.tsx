@@ -1,15 +1,15 @@
 import { View, Text, TextInput, Button, StyleSheet, Alert } from "react-native";
 import React, { useState } from "react";
-import { serverUrl } from "@/constants"; // Import serverUrl
+import { serverUrl, loggingEnabled } from "@/constants"; // Import serverUrl and loggingEnabled
 
 export default function CustomerLogin() {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 
 	const handleLogin = async () => {
-		console.log("CustomerLogin: handleLogin called");
-		console.log("CustomerLogin: email =", email);
-		console.log("CustomerLogin: password =", password);
+		if (loggingEnabled) console.log("CustomerLogin: handleLogin called");
+		if (loggingEnabled) console.log("CustomerLogin: email =", email);
+		if (loggingEnabled) console.log("CustomerLogin: password =", password);
 
 		try {
 			const response = await fetch(`${serverUrl}/auth/customer/login`, {
@@ -18,8 +18,9 @@ export default function CustomerLogin() {
 				body: JSON.stringify({ email, password }),
 			});
 			const data = await response.json();
-			console.log("CustomerLogin: response =", response);
-			console.log("CustomerLogin: data =", data);
+			if (loggingEnabled)
+				console.log("CustomerLogin: response =", response);
+			if (loggingEnabled) console.log("CustomerLogin: data =", data);
 
 			if (response.ok) {
 				Alert.alert("Success", "Login successful");
@@ -32,7 +33,7 @@ export default function CustomerLogin() {
 				);
 			}
 		} catch (error) {
-			console.error("CustomerLogin: error =", error);
+			if (loggingEnabled) console.error("CustomerLogin: error =", error);
 			Alert.alert("Error", "An error occurred during login");
 		}
 	};

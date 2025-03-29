@@ -1,6 +1,6 @@
 import { View, Text, TextInput, Button, StyleSheet, Alert } from "react-native";
 import React, { useState } from "react";
-import { serverUrl } from "@/constants"; // Import serverUrl
+import { serverUrl, loggingEnabled } from "@/constants"; // Import serverUrl and loggingEnabled
 
 export default function CustomerSignup() {
 	const [name, setName] = useState("");
@@ -8,10 +8,10 @@ export default function CustomerSignup() {
 	const [password, setPassword] = useState("");
 
 	const handleSignup = async () => {
-		console.log("CustomerSignup: handleSignup called");
-		console.log("CustomerSignup: name =", name);
-		console.log("CustomerSignup: email =", email);
-		console.log("CustomerSignup: password =", password);
+		if (loggingEnabled) console.log("CustomerSignup: handleSignup called");
+		if (loggingEnabled) console.log("CustomerSignup: name =", name);
+		if (loggingEnabled) console.log("CustomerSignup: email =", email);
+		if (loggingEnabled) console.log("CustomerSignup: password =", password);
 
 		const response = await fetch(`${serverUrl}/auth/customer/signup`, {
 			method: "POST",
@@ -19,8 +19,8 @@ export default function CustomerSignup() {
 			body: JSON.stringify({ name, email, password }),
 		});
 		const data = await response.json();
-		console.log("CustomerSignup: response =", response);
-		console.log("CustomerSignup: data =", data);
+		if (loggingEnabled) console.log("CustomerSignup: response =", response);
+		if (loggingEnabled) console.log("CustomerSignup: data =", data);
 
 		if (response.ok) {
 			Alert.alert("Success", "Signup successful");

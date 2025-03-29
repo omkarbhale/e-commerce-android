@@ -1,15 +1,15 @@
 import { View, Text, TextInput, Button, StyleSheet, Alert } from "react-native";
 import React, { useState } from "react";
-import { serverUrl } from "@/constants"; // Import serverUrl
+import { serverUrl, loggingEnabled } from "@/constants"; // Import serverUrl and loggingEnabled
 
 export default function BusinessLogin() {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 
 	const handleLogin = async () => {
-		console.log("BusinessLogin: handleLogin called");
-		console.log("BusinessLogin: email =", email);
-		console.log("BusinessLogin: password =", password);
+		if (loggingEnabled) console.log("BusinessLogin: handleLogin called");
+		if (loggingEnabled) console.log("BusinessLogin: email =", email);
+		if (loggingEnabled) console.log("BusinessLogin: password =", password);
 
 		try {
 			const response = await fetch(`${serverUrl}/auth/business/login`, {
@@ -18,8 +18,9 @@ export default function BusinessLogin() {
 				body: JSON.stringify({ email, password }),
 			});
 			const data = await response.json();
-			console.log("BusinessLogin: response =", response);
-			console.log("BusinessLogin: data =", data);
+			if (loggingEnabled)
+				console.log("BusinessLogin: response =", response);
+			if (loggingEnabled) console.log("BusinessLogin: data =", data);
 
 			if (response.ok) {
 				Alert.alert("Success", "Login successful");
@@ -32,7 +33,7 @@ export default function BusinessLogin() {
 				);
 			}
 		} catch (error) {
-			console.error("BusinessLogin: error =", error);
+			if (loggingEnabled) console.error("BusinessLogin: error =", error);
 			Alert.alert("Error", "An error occurred during login");
 		}
 	};
