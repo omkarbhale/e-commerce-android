@@ -1,4 +1,3 @@
-// TODO: remove testing user and implement other models
 const { DataTypes } = require("sequelize");
 const { sequelize } = require("../database/db");
 
