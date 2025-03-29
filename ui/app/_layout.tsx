@@ -27,7 +27,7 @@ function AuthenticatedContent() {
 			return;
 		}
 		if (role === "customer") {
-			router.push("/+not-found"); // Push for now, since not implemented
+			router.replace("/customer/feed"); // Redirect to customer feed
 		}
 	}, [isLoggedIn, role]);
 
