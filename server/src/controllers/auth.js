@@ -3,6 +3,13 @@ const jwt = require("jsonwebtoken");
 const { models } = require("../database/db");
 const { Business, Customer } = models;
 
+/**
+ * Generates a JWT token for the given user and role.
+ *
+ * @param {{ id: number }} user - The user object containing at least an `id` property.
+ * @param {"business" | "customer"} role - The role of the user (either "business" or "customer").
+ * @returns {string} - The generated JWT token.
+ */
 const generateToken = (user, role) => {
 	return jwt.sign({ id: user.id, role }, process.env.JWT_SECRET, {
 		expiresIn: "1h",
@@ -52,7 +59,7 @@ const businessLogin = async (req, res) => {
 		if (!business || !(await bcrypt.compare(password, business.password))) {
 			return res.status(401).json({ error: "Invalid credentials" });
 		}
-		const token = generateToken(business.email, "business");
+		const token = generateToken(business, "business");
 		res.status(200).json({ message: "Login successful", token });
 	} catch (error) {
 		res.status(500).json({ error: "Login failed", details: error.message });
@@ -87,7 +94,7 @@ const customerLogin = async (req, res) => {
 		if (!customer || !(await bcrypt.compare(password, customer.password))) {
 			return res.status(401).json({ error: "Invalid credentials" });
 		}
-		const token = generateToken(customer.email, "customer");
+		const token = generateToken(customer, "customer");
 		res.status(200).json({ message: "Login successful", token });
 	} catch (error) {
 		res.status(500).json({ error: "Login failed", details: error.message });
