@@ -9,9 +9,11 @@ app.use(express.json());
 const authRouter = require("./src/routes/auth");
 const productRouter = require("./src/routes/product");
 const transactionsRouter = require("./src/routes/transactions");
+const dashboardRouter = require("./src/routes/dashboard");
 app.use("/auth", authRouter);
 app.use("/product", productRouter);
 app.use("/transactions", transactionsRouter);
+app.use("/dashboard", dashboardRouter);
 
 const swaggerUi = require("swagger-ui-express");
 const swaggerJsdoc = require("swagger-jsdoc");

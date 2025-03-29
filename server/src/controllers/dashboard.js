@@ -1,6 +1,7 @@
-const { Op } = require("sequelize");
-const Product = require("../models/Product");
-const Transaction = require("../models/Transaction");
+const { Op, fn, col, literal } = require("sequelize");
+const { models } = require("../database/db");
+
+const { Product, Transaction } = models;
 
 const getBusinessDashboard = async (req, res) => {
 	try {
@@ -11,44 +12,61 @@ const getBusinessDashboard = async (req, res) => {
 		}
 
 		const totalProductsSold = await Transaction.sum("quantity", {
-			include: {
-				model: Product,
-				where: { businessId },
+			where: {
+				"$Product.businessId$": businessId,
 			},
+			include: [
+				{
+					model: Product,
+					attributes: [],
+				},
+			],
 		});
 
 		const totalRevenue = await Transaction.sum("totalPrice", {
-			include: {
-				model: Product,
-				where: { businessId },
+			where: {
+				"$Product.businessId$": businessId,
 			},
+			include: [
+				{
+					model: Product,
+					attributes: [],
+				},
+			],
 		});
 
 		const oneMonthAgo = new Date();
 		oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1);
 
 		const revenuePastMonth = await Transaction.sum("totalPrice", {
-			include: {
-				model: Product,
-				where: { businessId },
-			},
 			where: {
+				"$Product.businessId$": businessId,
 				createdAt: { [Op.gte]: oneMonthAgo },
 			},
+			include: [
+				{
+					model: Product,
+					attributes: [],
+				},
+			],
 		});
 
 		const topProducts = await Transaction.findAll({
 			attributes: [
 				"productId",
-				[sequelize.fn("SUM", sequelize.col("quantity")), "totalSold"],
+				[fn("SUM", col("quantity")), "totalSold"],
 			],
-			include: {
-				model: Product,
-				where: { businessId },
-				attributes: ["name"],
+			where: {
+				"$Product.businessId$": businessId,
 			},
+			include: [
+				{
+					model: Product,
+					attributes: ["name"],
+				},
+			],
 			group: ["productId", "Product.id"],
-			order: [[sequelize.literal("totalSold"), "DESC"]],
+			order: [[literal("totalSold"), "DESC"]],
 			limit: 3,
 		});
 
