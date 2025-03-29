@@ -3,22 +3,23 @@ import {
 	View,
 	Text,
 	TextInput,
-	Button,
 	StyleSheet,
 	Alert,
 	Image,
 	TouchableOpacity,
 } from "react-native";
 import * as ImagePicker from "expo-image-picker";
+import { serverUrl, loggingEnabled } from "@/constants";
+import { useAuth } from "@/contexts/AuthenticationContext";
 
 const AddProduct = () => {
-	// States to manage form inputs
 	const [productName, setProductName] = useState<string>("");
 	const [price, setPrice] = useState<string>("");
 	const [description, setDescription] = useState<string>("");
 	const [imageUri, setImageUri] = useState<string>("");
 
-	// Handle image selection
+	const { user } = useAuth();
+
 	const pickImage = async () => {
 		const { status } =
 			await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -38,6 +39,39 @@ const AddProduct = () => {
 
 		if (!result.canceled) {
 			setImageUri(result.assets[0].uri);
+		}
+	};
+
+	const handleSubmit = async () => {
+		if (loggingEnabled) console.log("AddProduct: handleSubmit called");
+		if (loggingEnabled)
+			console.log("AddProduct: productName =", productName);
+		if (loggingEnabled) console.log("AddProduct: price =", price);
+		if (loggingEnabled) console.log("AddProduct: businessId =", user?.id);
+
+		const response = await fetch(`${serverUrl}/product`, {
+			method: "POST",
+			headers: { "Content-Type": "application/json" },
+			body: JSON.stringify({
+				name: productName,
+				price: parseFloat(price),
+				businessId: user?.id,
+			}),
+		});
+
+		const data = await response.json();
+		if (loggingEnabled) console.log("AddProduct: response =", response);
+		if (loggingEnabled) console.log("AddProduct: data =", data);
+
+		if (response.ok) {
+			Alert.alert("Success", "Product added successfully");
+		} else {
+			Alert.alert(
+				"Error",
+				`${data.error || "Failed to add product"}\nDetails: ${
+					data.details || "No additional details"
+				}`,
+			);
 		}
 	};
 
@@ -74,16 +108,9 @@ const AddProduct = () => {
 				<Image source={{ uri: imageUri }} style={styles.image} />
 			) : null}
 
-			{/* <Button title="Add Product" /> */}
 			<TouchableOpacity
 				style={styles.submitButton}
-				onPress={() =>
-					Alert.alert("TODO", "Submission logic not implemented", [
-						{ text: "Implement" },
-						{ text: "Ignore" },
-					])
-				}
-			>
+				onPress={handleSubmit}>
 				<Text style={styles.submitButtonText}>Submit</Text>
 			</TouchableOpacity>
 
@@ -94,6 +121,7 @@ const AddProduct = () => {
 					Product Preview:
 					{"\n"}Name: {productName}
 					{"\n"}Price: {price}
+					{"\n"}Business ID: {user?.id}
 					{"\n"}Description: {description}
 					{"\n"}Image: {imageUri ? "Selected" : "Not Selected"}
 				</Text>
