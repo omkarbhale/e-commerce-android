@@ -1,18 +1,31 @@
 import { Slot, useRouter } from "expo-router";
 import { useEffect } from "react";
-
-const isLoggedIn = false;
+import {
+	AuthenticationProvider,
+	useAuth,
+} from "@/contexts/AuthenticationContext";
 
 export default function Layout() {
 	const router = useRouter();
+	const { isLoggedIn, role } = useAuth();
 
 	useEffect(() => {
 		if (!isLoggedIn) {
 			router.replace("/login/customerlogin");
-		} else {
-			router.replace("/+not-found");
+			return;
 		}
-	});
+		if (role === "business") {
+			router.replace("/business/dashboard");
+			return;
+		}
+		if (role === "customer") {
+			router.push("/+not-found"); // Push for now, since not implemented
+		}
+	}, [isLoggedIn, role]);
 
-	return <Slot />;
+	return (
+		<AuthenticationProvider>
+			<Slot />
+		</AuthenticationProvider>
+	);
 }

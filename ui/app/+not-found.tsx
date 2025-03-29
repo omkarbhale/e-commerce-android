@@ -1,3 +1,9 @@
+import { Text, View } from "react-native";
+
 export default function NotFoundScreen() {
-	return <></>;
+	return (
+		<View>
+			<Text>Not implemented yet</Text>
+		</View>
+	);
 }

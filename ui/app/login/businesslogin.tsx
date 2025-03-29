@@ -2,9 +2,11 @@ import { View, Text, TextInput, Button, StyleSheet, Alert } from "react-native";
 import React, { useState } from "react";
 import { serverUrl, loggingEnabled } from "@/constants"; // Import serverUrl and loggingEnabled
 import { useRouter } from "expo-router"; // Import useRouter
+import { useAuth } from "@/contexts/AuthenticationContext"; // Import useAuth
 
 export default function BusinessLogin() {
 	const router = useRouter(); // Initialize router
+	const { login } = useAuth(); // Access login from context
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 
@@ -25,8 +27,9 @@ export default function BusinessLogin() {
 			if (loggingEnabled) console.log("BusinessLogin: data =", data);
 
 			if (response.ok) {
+				login("business", data.token); // Update context
 				Alert.alert("Success", "Login successful");
-				router.push("/business/dashboard"); // Navigate to dashboard
+				// router.push("/business/dashboard"); // Navigate to dashboard
 			} else {
 				Alert.alert(
 					"Error",

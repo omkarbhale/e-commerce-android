@@ -1,11 +1,14 @@
 import { View, Text, TextInput, Button, StyleSheet, Alert } from "react-native";
 import React, { useState } from "react";
 import { serverUrl, loggingEnabled } from "@/constants"; // Import serverUrl and loggingEnabled
+import { useAuth } from "@/contexts/AuthenticationContext"; // Import useAuth
 
 export default function CustomerSignup() {
 	const [name, setName] = useState("");
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
+
+	const { login } = useAuth(); // Access login from context
 
 	const handleSignup = async () => {
 		if (loggingEnabled) console.log("CustomerSignup: handleSignup called");
@@ -23,6 +26,7 @@ export default function CustomerSignup() {
 		if (loggingEnabled) console.log("CustomerSignup: data =", data);
 
 		if (response.ok) {
+			login("customer", data.token); // Update context
 			Alert.alert("Success", "Signup successful");
 		} else {
 			Alert.alert(
