@@ -1,4 +1,4 @@
-import { View, Text, Alert } from "react-native";
+import { View, Text } from "react-native";
 import React from "react";
 import ProductList, { Product } from "@/components/BusinessProductList";
 import { useRouter } from "expo-router";
@@ -23,8 +23,17 @@ export default function BrowseProducts() {
 
 		router.push(`/business/${product.id}`);
 	};
+
 	return (
 		<View>
+			<Text
+				style={{
+					fontSize: 24,
+					fontWeight: "bold",
+					padding: 16,
+				}}>
+				Your Products
+			</Text>
 			<ProductList
 				products={products}
 				onProductPress={handleProductPress}
