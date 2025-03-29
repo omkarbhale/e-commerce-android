@@ -24,7 +24,12 @@ export default function CustomerLogin() {
 			if (response.ok) {
 				Alert.alert("Success", "Login successful");
 			} else {
-				Alert.alert("Error", data.error || "Login failed");
+				Alert.alert(
+					"Error",
+					`${data.error || "Login failed"}\nDetails: ${
+						data.details || "No additional details"
+					}`,
+				);
 			}
 		} catch (error) {
 			console.error("CustomerLogin: error =", error);

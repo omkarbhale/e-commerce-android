@@ -26,7 +26,12 @@ export default function BusinessSignup() {
 			if (response.ok) {
 				Alert.alert("Success", "Signup successful");
 			} else {
-				Alert.alert("Error", data.error || "Signup failed");
+				Alert.alert(
+					"Error",
+					`${data.error || "Signup failed"}\nDetails: ${
+						data.details || "No additional details"
+					}`,
+				);
 			}
 		} catch (error) {
 			console.error("BusinessSignup: error =", error);

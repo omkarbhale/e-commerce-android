@@ -24,7 +24,12 @@ export default function BusinessLogin() {
 			if (response.ok) {
 				Alert.alert("Success", "Login successful");
 			} else {
-				Alert.alert("Error", data.error || "Login failed");
+				Alert.alert(
+					"Error",
+					`${data.error || "Login failed"}\nDetails: ${
+						data.details || "No additional details"
+					}`,
+				);
 			}
 		} catch (error) {
 			console.error("BusinessLogin: error =", error);
