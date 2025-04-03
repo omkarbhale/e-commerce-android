@@ -1,50 +1,56 @@
-# Welcome to your Expo app 👋
+# Welcome to your Expo App 👋
 
 This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
 
-## Get started
+## 📖 Overview
 
-1. Install dependencies
+This project is the client-side of a larger application. It is built using Expo and React Native, providing a cross-platform mobile app experience.
+
+## 🚀 Get Started
+
+### Prerequisites
+
+- Node.js installed on your system.
+- Expo CLI installed globally (optional but recommended).
+
+### Steps
+
+1. **Install dependencies**
 
     ```bash
     npm install
     ```
 
-2. Start the app
+2. **Set up constants**
+
+    - Open the `constants.js` file in the root of the `ui` directory.
+    - Update the `serverUrl` constant to point to your server's base URL (replace the placeholder with the actual value):
+        ```javascript
+        export const serverUrl = "http://<your-server-ip>:3001";
+        ```
+
+3. **Start the app**
 
     ```bash
-     npx expo start
+    npx expo start
     ```
 
-In the output, you'll find options to open the app in a
+4. **Run the app**
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+    - Open the app in a [development build](https://docs.expo.dev/develop/development-builds/introduction/).
+    - Use an [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/) or [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/).
+    - Alternatively, scan the QR code in the terminal using [Expo Go](https://expo.dev/go).
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+### Development
 
-## Get a fresh project
+Start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
 
-When you're ready, run:
+## 📚 Learn More
 
-```bash
-npm run reset-project
-```
+- [Expo documentation](https://docs.expo.dev/): Learn fundamentals and advanced topics.
+- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Step-by-step guide to building a project.
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+## 🤝 Join the Community
 
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+- [Expo on GitHub](https://github.com/expo/expo): Contribute to the open-source platform.
+- [Discord community](https://chat.expo.dev): Chat with other developers and ask questions.
