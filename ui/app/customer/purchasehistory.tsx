@@ -5,10 +5,10 @@ import { useAuth } from "@/contexts/AuthenticationContext";
 
 interface Transaction {
 	id: number;
-	productId: number;
-	productName: string;
+	title: string;
 	quantity: number;
 	totalPrice: number;
+	date: string;
 }
 
 export default function PurchaseHistory() {
@@ -49,22 +49,36 @@ export default function PurchaseHistory() {
 		fetchTransactions();
 	}, [token, user]);
 
-	const renderItem = ({ item }: { item: Transaction }) => (
-		<View style={styles.card}>
-			<Text style={styles.name}>{item.productName}</Text>
-			<Text style={styles.details}>Quantity: {item.quantity}</Text>
-			<Text style={styles.details}>
-				Total Price: ${item.totalPrice.toFixed(2)}
-			</Text>
-		</View>
-	);
+	const renderItem = ({ item }: { item: Transaction }) => {
+		return (
+			<View style={styles.card}>
+				<Text style={styles.name}>{item.title}</Text>
+				<Text style={styles.details}>
+					Date:{" "}
+					{new Date(item.date).toLocaleString(undefined, {
+						year: "numeric",
+						month: "short",
+						day: "numeric",
+						hour: "2-digit",
+						minute: "2-digit",
+					})}
+				</Text>
+				<Text style={styles.details}>Quantity: {item.quantity}</Text>
+				<Text style={styles.details}>
+					Total Price: ${item.totalPrice.toFixed(2)}
+				</Text>
+			</View>
+		);
+	};
 
 	return (
 		<View style={styles.container}>
 			<Text style={styles.title}>Purchase History</Text>
 			<FlatList
 				data={transactions}
-				keyExtractor={(item) => item.id.toString()}
+				keyExtractor={(item, index) =>
+					item.id ? item.id.toString() : index.toString()
+				}
 				renderItem={renderItem}
 				contentContainerStyle={styles.list}
 			/>

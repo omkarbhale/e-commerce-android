@@ -35,8 +35,8 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 const run = async () => {
 	await require("./src/database/db").sequelize.sync({
-		force: true,
-		alter: true,
+		// force: true,
+		// alter: true,
 	});
 	app.listen(process.env.PORT || 3001, () =>
 		console.log(`Listening on PORT ${process.env.PORT || 3001}`),

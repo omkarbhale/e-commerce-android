@@ -43,9 +43,25 @@ const getCustomerTransactions = async (req, res) => {
 		const transactions = await Transaction.findAll({
 			where: { customerId },
 			include: [{ model: Product, attributes: ["name", "price"] }],
+			attributes: [
+				"id",
+				"productId",
+				"quantity",
+				"totalPrice",
+				"createdAt",
+			],
 		});
 
-		res.status(200).json(transactions);
+		const formattedTransactions = transactions.map((transaction) => ({
+			title: `${transaction.Product.name}`,
+			quantity: transaction.quantity,
+			totalPrice: transaction.totalPrice,
+			date: transaction.createdAt.toISOString(), // Ensure full datetime precision
+			productName: transaction.Product.name,
+			productPrice: transaction.Product.price,
+		}));
+
+		res.status(200).json(formattedTransactions);
 	} catch (error) {
 		res.status(500).json({
 			error: "Failed to fetch transactions",
