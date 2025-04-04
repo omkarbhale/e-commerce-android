@@ -1,5 +1,5 @@
-const Transaction = require("../models/Transaction");
-const Product = require("../models/Product");
+const { models } = require("../database/db");
+const { Product, Transaction } = models;
 
 const buyProduct = async (req, res) => {
 	try {
