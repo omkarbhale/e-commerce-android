@@ -2,8 +2,10 @@ import { View, Text, TextInput, Button, StyleSheet, Alert } from "react-native";
 import React, { useState } from "react";
 import { serverUrl, loggingEnabled } from "@/constants"; // Import serverUrl and loggingEnabled
 import { useAuth } from "@/contexts/AuthenticationContext"; // Import useAuth
+import { useRouter } from "expo-router";
 
 export default function CustomerSignup() {
+	const router = useRouter(); // Initialize router
 	const [name, setName] = useState("");
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
@@ -32,6 +34,7 @@ export default function CustomerSignup() {
 				email: data.customer.email,
 			}); // Pass user object to context
 			Alert.alert("Success", "Signup successful");
+			router.replace("/customer/feed");
 		} else {
 			Alert.alert(
 				"Error",

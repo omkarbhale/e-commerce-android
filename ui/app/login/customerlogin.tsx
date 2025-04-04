@@ -2,8 +2,10 @@ import { View, Text, TextInput, Button, StyleSheet, Alert } from "react-native";
 import React, { useState } from "react";
 import { serverUrl, loggingEnabled } from "@/constants";
 import { useAuth } from "@/contexts/AuthenticationContext";
+import { useRouter } from "expo-router";
 
 export default function CustomerLogin() {
+	const router = useRouter(); // Initialize router
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const { login } = useAuth();
@@ -31,6 +33,7 @@ export default function CustomerLogin() {
 					email: data.customer.email,
 				});
 				Alert.alert("Success", "Login successful");
+				router.replace("/customer/feed");
 			} else {
 				Alert.alert(
 					"Error",

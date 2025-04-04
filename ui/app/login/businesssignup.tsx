@@ -35,6 +35,7 @@ export default function BusinessSignup() {
 					email: data.business.email,
 				}); // Pass user object to context
 				Alert.alert("Success", "Signup successful");
+				router.replace("/customer/feed");
 			} else {
 				Alert.alert(
 					"Error",

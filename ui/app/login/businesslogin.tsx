@@ -33,6 +33,7 @@ export default function BusinessLogin() {
 					email: data.business.email,
 				}); // Pass user object to context
 				Alert.alert("Success", "Login successful");
+				router.replace("/business/dashboard");
 			} else {
 				Alert.alert(
 					"Error",
