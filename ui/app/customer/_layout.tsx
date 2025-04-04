@@ -1,5 +1,5 @@
 import { Tabs } from "expo-router";
-import { Ionicons } from "react-native-vector-icons";
+import { Ionicons, Fontisto } from "react-native-vector-icons";
 
 export default function CustomerLayout() {
 	return (
@@ -19,6 +19,15 @@ export default function CustomerLayout() {
 					title: "Purchase History",
 					tabBarIcon: ({ color, size }) => (
 						<Ionicons name="receipt" size={size} color={color} />
+					),
+				}}
+			/>
+			<Tabs.Screen
+				name="profile"
+				options={{
+					title: "Profile",
+					tabBarIcon: ({ color, size }) => (
+						<Fontisto name="person" size={size} color={color} />
 					),
 				}}
 			/>
