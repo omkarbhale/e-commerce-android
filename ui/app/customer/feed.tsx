@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { View, Text, FlatList, StyleSheet, Alert, Button } from "react-native";
 import { serverUrl, loggingEnabled } from "@/constants";
 import { useAuth } from "@/contexts/AuthenticationContext";
+import { usePurchaseHistoryContext } from "@/contexts/PurchaseHistoryContext";
 
 interface Product {
 	id: number;
@@ -12,6 +13,7 @@ interface Product {
 export default function CustomerFeed() {
 	const [products, setProducts] = useState<Product[]>([]);
 	const { token, user } = useAuth();
+	const { refreshTransactions } = usePurchaseHistoryContext();
 
 	useEffect(() => {
 		const fetchProducts = async () => {
@@ -71,6 +73,9 @@ export default function CustomerFeed() {
 
 			if (response.ok) {
 				Alert.alert("Success", "Product purchased successfully");
+
+				// Trigger a re-fetch of transactions
+				refreshTransactions();
 			} else {
 				Alert.alert(
 					"Error",

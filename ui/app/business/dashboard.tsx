@@ -70,7 +70,7 @@ export default function Dashboard() {
 						},
 						...data.topProducts.map((product: any) => ({
 							label: `Top Product: ${product.productName}`,
-							value: product.totalSold,
+							value: product.totalSold + " sold",
 						})),
 					]);
 				} else {

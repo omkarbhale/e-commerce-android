@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { View, Text, FlatList, StyleSheet, Alert } from "react-native";
-import { serverUrl, loggingEnabled } from "@/constants";
+import { usePurchaseHistoryContext } from "@/contexts/PurchaseHistoryContext";
 import { useAuth } from "@/contexts/AuthenticationContext";
+import { serverUrl } from "@/constants";
 
 interface Transaction {
 	id: number;
@@ -12,7 +13,7 @@ interface Transaction {
 }
 
 export default function PurchaseHistory() {
-	const [transactions, setTransactions] = useState<Transaction[]>([]);
+	const { transactions, setTransactions } = usePurchaseHistoryContext();
 	const { token, user } = useAuth();
 
 	useEffect(() => {
@@ -30,7 +31,13 @@ export default function PurchaseHistory() {
 				const data = await response.json();
 
 				if (response.ok) {
-					setTransactions(data);
+					// Sort transactions by most recent first
+					const sortedData = data.sort(
+						(a: Transaction, b: Transaction) =>
+							new Date(b.date).getTime() -
+							new Date(a.date).getTime(),
+					);
+					setTransactions(sortedData);
 				} else {
 					Alert.alert(
 						"Error",
@@ -47,7 +54,7 @@ export default function PurchaseHistory() {
 		};
 
 		fetchTransactions();
-	}, [token, user]);
+	}, [token, user, setTransactions]);
 
 	const renderItem = ({ item }: { item: Transaction }) => {
 		return (
