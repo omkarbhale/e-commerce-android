@@ -83,6 +83,9 @@ const businessLogin = async (req, res) => {
 const customerSignup = async (req, res) => {
 	const { name, email, password } = req.body;
 	try {
+		if (!name || !email || !password) {
+			throw new Error("Missing details");
+		}
 		const hashedPassword = await bcrypt.hash(password, 10);
 		const customer = await Customer.create({
 			name,
