@@ -62,11 +62,11 @@ export default function Dashboard() {
 						},
 						{
 							label: "Total Revenue",
-							value: `$${data.totalRevenue}`,
+							value: `${data.totalRevenue} ₹`,
 						},
 						{
 							label: "Revenue Past Month",
-							value: `$${data.revenuePastMonth}`,
+							value: `${data.revenuePastMonth} ₹`,
 						},
 						...data.topProducts.map((product: any) => ({
 							label: `Top Product: ${product.productName}`,

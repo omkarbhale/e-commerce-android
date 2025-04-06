@@ -27,7 +27,7 @@ const ProductList: React.FC<ProductListProps> = ({
 		<View style={styles.card}>
 			<View style={styles.infoContainer}>
 				<Text style={styles.name}>{item.name}</Text>
-				<Text style={styles.price}>${item.price.toFixed(2)}</Text>
+				<Text style={styles.price}>{item.price.toFixed(2)} ₹</Text>
 			</View>
 			<Button
 				title="Delete"
