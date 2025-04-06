@@ -49,7 +49,7 @@ export default function CustomerFeed() {
 	const renderItem = ({ item }: { item: Product }) => (
 		<View style={styles.card}>
 			<Text style={styles.name}>{item.name}</Text>
-			<Text style={styles.price}>${item.price.toFixed(2)}</Text>
+			<Text style={styles.price}>{item.price.toFixed(2)} ₹</Text>
 			<Button title="Buy" onPress={() => handleBuy(item.id)} />
 		</View>
 	);

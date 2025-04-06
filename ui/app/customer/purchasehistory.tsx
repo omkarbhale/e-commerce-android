@@ -72,7 +72,7 @@ export default function PurchaseHistory() {
 				</Text>
 				<Text style={styles.details}>Quantity: {item.quantity}</Text>
 				<Text style={styles.details}>
-					Total Price: ${item.totalPrice.toFixed(2)}
+					Total Price: {item.totalPrice.toFixed(2)} ₹
 				</Text>
 			</View>
 		);
