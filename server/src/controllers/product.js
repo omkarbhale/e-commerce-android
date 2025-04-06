@@ -30,8 +30,25 @@ const addProduct = async (req, res) => {
 
 const getAllProducts = async (req, res) => {
 	try {
-		const products = await Product.findAll();
-		res.status(200).json(products);
+		const products = await Product.findAll({
+			include: [
+				{
+					model: Business,
+					attributes: ["name"],
+				},
+			],
+		});
+
+		console.log(products[0].Business.name); // Debugging line
+
+		const productsWithBusiness = products.map((product) => ({
+			id: product.id,
+			name: product.name,
+			price: product.price,
+			businessName: product.Business.name,
+		}));
+
+		res.status(200).json(productsWithBusiness);
 	} catch (error) {
 		res.status(500).json({
 			error: "Failed to fetch products",

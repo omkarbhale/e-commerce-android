@@ -8,6 +8,7 @@ interface Product {
 	id: number;
 	name: string;
 	price: number;
+	businessName: string; // Added business name
 }
 
 export default function CustomerFeed() {
@@ -49,6 +50,7 @@ export default function CustomerFeed() {
 	const renderItem = ({ item }: { item: Product }) => (
 		<View style={styles.card}>
 			<Text style={styles.name}>{item.name}</Text>
+			<Text style={styles.businessName}>By: {item.businessName}</Text>
 			<Text style={styles.price}>{item.price.toFixed(2)} ₹</Text>
 			<Button title="Buy" onPress={() => handleBuy(item.id)} />
 		</View>
@@ -132,6 +134,11 @@ const styles = StyleSheet.create({
 	name: {
 		fontSize: 16,
 		fontWeight: "bold",
+		marginBottom: 5,
+	},
+	businessName: {
+		fontSize: 14,
+		color: "#555",
 		marginBottom: 5,
 	},
 	price: {
