@@ -49,10 +49,18 @@ export default function CustomerFeed() {
 
 	const renderItem = ({ item }: { item: Product }) => (
 		<View style={styles.card}>
-			<Text style={styles.name}>{item.name}</Text>
-			<Text style={styles.businessName}>By: {item.businessName}</Text>
-			<Text style={styles.price}>{item.price.toFixed(2)} ₹</Text>
-			<Button title="Buy" onPress={() => handleBuy(item.id)} />
+			<View style={styles.cardHeader}>
+				<Text style={styles.name}>{item.name}</Text>
+				<Text style={styles.price}>{item.price.toFixed(2)} ₹</Text>
+			</View>
+			<View style={styles.cardFooterRow}>
+				<Text style={styles.businessName}>By: {item.businessName}</Text>
+				<Button
+					title="Buy"
+					onPress={() => handleBuy(item.id)}
+					color="#4CAF50"
+				/>
+			</View>
 		</View>
 	);
 
@@ -134,16 +142,25 @@ const styles = StyleSheet.create({
 	name: {
 		fontSize: 16,
 		fontWeight: "bold",
-		marginBottom: 5,
 	},
 	businessName: {
 		fontSize: 14,
 		color: "#555",
-		marginBottom: 5,
 	},
 	price: {
 		fontSize: 14,
 		color: "#4CAF50",
 		marginBottom: 10,
+	},
+	cardHeader: {
+		flexDirection: "row",
+		justifyContent: "space-between",
+		alignItems: "center",
+		marginBottom: 5,
+	},
+	cardFooterRow: {
+		flexDirection: "row",
+		justifyContent: "space-between",
+		alignItems: "center",
 	},
 });
