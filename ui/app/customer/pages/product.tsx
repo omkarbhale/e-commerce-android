@@ -32,6 +32,7 @@ export default function ProductPage() {
 
 	useEffect(() => {
 		const fetchProductDetails = async () => {
+			setLoading(true);
 			try {
 				const response = await fetch(`${serverUrl}/product/${id}`);
 				const data = await response.json();
@@ -93,11 +94,9 @@ export default function ProductPage() {
 
 	if (loading) {
 		return (
-			<ActivityIndicator
-				size="large"
-				color="#0000ff"
-				style={styles.loader}
-			/>
+			<View style={styles.loaderContainer}>
+				<ActivityIndicator size="large" color="#0000ff" />
+			</View>
 		);
 	}
 
@@ -168,5 +167,10 @@ const styles = StyleSheet.create({
 		color: "red",
 		textAlign: "center",
 		marginTop: 20,
+	},
+	loaderContainer: {
+		flex: 1,
+		justifyContent: "center",
+		alignItems: "center",
 	},
 });
