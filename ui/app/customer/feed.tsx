@@ -1,8 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, FlatList, StyleSheet, Alert, Button } from "react-native";
+import {
+	View,
+	Text,
+	FlatList,
+	StyleSheet,
+	Alert,
+	Button,
+	TouchableOpacity,
+} from "react-native";
 import { serverUrl, loggingEnabled } from "@/constants";
 import { useAuth } from "@/contexts/AuthenticationContext";
 import { usePurchaseHistoryContext } from "@/contexts/PurchaseHistoryContext";
+import { useRouter } from "expo-router";
 
 interface Product {
 	id: number;
@@ -15,6 +24,7 @@ export default function CustomerFeed() {
 	const [products, setProducts] = useState<Product[]>([]);
 	const { token, user } = useAuth();
 	const { refreshTransactions } = usePurchaseHistoryContext();
+	const router = useRouter();
 
 	useEffect(() => {
 		const fetchProducts = async () => {
@@ -48,7 +58,11 @@ export default function CustomerFeed() {
 	}, [token]);
 
 	const renderItem = ({ item }: { item: Product }) => (
-		<View style={styles.card}>
+		<TouchableOpacity
+			style={styles.card}
+			onPress={() =>
+				router.push(`/customer/pages/product?id=${item.id}`)
+			}>
 			<View style={styles.cardHeader}>
 				<Text style={styles.name}>{item.name}</Text>
 				<Text style={styles.price}>{item.price.toFixed(2)} ₹</Text>
@@ -61,7 +75,7 @@ export default function CustomerFeed() {
 					color="#4CAF50"
 				/>
 			</View>
-		</View>
+		</TouchableOpacity>
 	);
 
 	const handleBuy = async (productId: number) => {

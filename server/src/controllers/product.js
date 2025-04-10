@@ -73,6 +73,43 @@ const getProductsByBusinessId = async (req, res) => {
 	}
 };
 
+const getProductById = async (req, res) => {
+	try {
+		const { id } = req.params;
+
+		if (!id) {
+			return res.status(400).json({ error: "Product ID is required" });
+		}
+
+		const product = await Product.findByPk(id, {
+			include: [
+				{
+					model: Business,
+					attributes: ["name"],
+				},
+			],
+		});
+
+		if (!product) {
+			return res.status(404).json({ error: "Product not found" });
+		}
+
+		const productDetails = {
+			id: product.id,
+			name: product.name,
+			price: product.price,
+			businessName: product.Business.name,
+		};
+
+		res.status(200).json(productDetails);
+	} catch (error) {
+		res.status(500).json({
+			error: "Failed to fetch product details",
+			details: error.message,
+		});
+	}
+};
+
 const deleteProduct = async (req, res) => {
 	try {
 		debugger;
@@ -102,4 +139,5 @@ module.exports = {
 	getAllProducts,
 	getProductsByBusinessId,
 	deleteProduct,
+	getProductById,
 };

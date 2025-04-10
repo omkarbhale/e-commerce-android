@@ -4,6 +4,7 @@ const {
 	getAllProducts,
 	getProductsByBusinessId,
 	deleteProduct,
+	getProductById, // Added getProductById
 } = require("../controllers/product.js");
 
 /**
@@ -136,6 +137,50 @@ const {
 
 /**
  * @swagger
+ * /product/{id}:
+ *   get:
+ *     summary: Get product details by ID
+ *     tags: [Product]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *           example: 1
+ *     responses:
+ *       200:
+ *         description: Product details
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 id:
+ *                   type: integer
+ *                   example: 1
+ *                 name:
+ *                   type: string
+ *                   example: "Wireless Headphones"
+ *                 description:
+ *                   type: string
+ *                   example: "High-quality wireless headphones with noise cancellation."
+ *                 price:
+ *                   type: number
+ *                   example: 59.99
+ *                 businessName:
+ *                   type: string
+ *                   example: "Tech Store"
+ *       400:
+ *         description: Bad request
+ *       404:
+ *         description: Product not found
+ *       500:
+ *         description: Failed to fetch product details
+ */
+
+/**
+ * @swagger
  * /product/{productId}:
  *   delete:
  *     summary: Delete a product by ID
@@ -158,6 +203,7 @@ const {
 router.post("/", addProduct);
 router.get("/", getAllProducts);
 router.get("/business/:businessId", getProductsByBusinessId);
+router.get("/:id", getProductById); // Added route for getProductById
 router.delete("/:productId", deleteProduct);
 
 module.exports = router;
