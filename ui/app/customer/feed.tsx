@@ -60,9 +60,7 @@ export default function CustomerFeed() {
 	const renderItem = ({ item }: { item: Product }) => (
 		<TouchableOpacity
 			style={styles.card}
-			onPress={() =>
-				router.push(`/customer/pages/product?id=${item.id}`)
-			}>
+			onPress={() => router.push(`/customer/product?id=${item.id}`)}>
 			<View style={styles.cardHeader}>
 				<Text style={styles.name}>{item.name}</Text>
 				<Text style={styles.price}>{item.price.toFixed(2)} ₹</Text>

@@ -37,6 +37,11 @@ export default function CustomerLayout() {
 						),
 					}}
 				/>
+
+				<Tabs.Screen
+					name="product"
+					options={{ href: null, title: "Product" }}
+				/>
 			</Tabs>
 		</PurchaseHistoryProvider>
 	);
