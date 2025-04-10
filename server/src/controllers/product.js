@@ -85,7 +85,7 @@ const getProductById = async (req, res) => {
 			include: [
 				{
 					model: Business,
-					attributes: ["name"],
+					attributes: ["name", "address", "phone"],
 				},
 			],
 		});
@@ -99,6 +99,8 @@ const getProductById = async (req, res) => {
 			name: product.name,
 			price: product.price,
 			businessName: product.Business.name,
+			businessAddress: product.Business.address,
+			businessPhone: product.Business.phone,
 		};
 
 		res.status(200).json(productDetails);

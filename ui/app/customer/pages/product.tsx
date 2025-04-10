@@ -18,6 +18,8 @@ interface ProductDetails {
 	description: string;
 	price: number;
 	businessName: string;
+	businessAddress: string; // Added field
+	businessPhone: string; // Added field
 }
 
 export default function ProductPage() {
