@@ -5,7 +5,7 @@ import { useAuth } from "@/contexts/AuthenticationContext";
 import { useRouter } from "expo-router";
 
 export default function CustomerLogin() {
-	const router = useRouter(); // Initialize router
+	const router = useRouter();
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const { login } = useAuth();
@@ -57,6 +57,9 @@ export default function CustomerLogin() {
 					placeholder="Email"
 					value={email}
 					onChangeText={setEmail}
+					keyboardType="email-address"
+					autoCapitalize="none"
+					accessibilityLabel="Enter your email"
 				/>
 				<TextInput
 					style={styles.input}
@@ -64,8 +67,14 @@ export default function CustomerLogin() {
 					secureTextEntry={true}
 					value={password}
 					onChangeText={setPassword}
+					accessibilityLabel="Enter your password"
 				/>
-				<Button title="Log In" color="#007BFF" onPress={handleLogin} />
+				<Button
+					title="Log In"
+					color="#007BFF"
+					onPress={handleLogin}
+					accessibilityLabel="Log in button"
+				/>
 			</View>
 		</View>
 	);

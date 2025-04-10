@@ -57,6 +57,9 @@ export default function BusinessLogin() {
 					placeholder="Email"
 					value={email}
 					onChangeText={setEmail}
+					keyboardType="email-address"
+					autoCapitalize="none"
+					accessibilityLabel="Enter your email"
 				/>
 				<TextInput
 					style={styles.input}
@@ -64,8 +67,14 @@ export default function BusinessLogin() {
 					secureTextEntry={true}
 					value={password}
 					onChangeText={setPassword}
+					accessibilityLabel="Enter your password"
 				/>
-				<Button title="Log In" color="#007BFF" onPress={handleLogin} />
+				<Button
+					title="Log In"
+					color="#007BFF"
+					onPress={handleLogin}
+					accessibilityLabel="Log in button"
+				/>
 			</View>
 		</View>
 	);

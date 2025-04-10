@@ -1,12 +1,12 @@
 import { View, Text, TextInput, Button, StyleSheet, Alert } from "react-native";
 import React, { useState } from "react";
-import { serverUrl, loggingEnabled } from "@/constants"; // Import serverUrl and loggingEnabled
-import { useRouter } from "expo-router"; // Import useRouter
-import { useAuth } from "@/contexts/AuthenticationContext"; // Import useAuth
+import { serverUrl, loggingEnabled } from "@/constants";
+import { useRouter } from "expo-router";
+import { useAuth } from "@/contexts/AuthenticationContext";
 
 export default function BusinessSignup() {
-	const router = useRouter(); // Initialize router
-	const { login } = useAuth(); // Access login from context
+	const router = useRouter();
+	const { login } = useAuth();
 	const [name, setName] = useState("");
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
@@ -65,12 +65,16 @@ export default function BusinessSignup() {
 					placeholder="Name"
 					value={name}
 					onChangeText={setName}
+					accessibilityLabel="Enter your name"
 				/>
 				<TextInput
 					style={styles.input}
 					placeholder="Email"
 					value={email}
 					onChangeText={setEmail}
+					keyboardType="email-address"
+					autoCapitalize="none"
+					accessibilityLabel="Enter your email"
 				/>
 				<TextInput
 					style={styles.input}
@@ -78,23 +82,28 @@ export default function BusinessSignup() {
 					secureTextEntry={true}
 					value={password}
 					onChangeText={setPassword}
+					accessibilityLabel="Enter your password"
 				/>
 				<TextInput
 					style={styles.input}
 					placeholder="Address"
 					value={address}
 					onChangeText={setAddress}
+					accessibilityLabel="Enter your address"
 				/>
 				<TextInput
 					style={styles.input}
 					placeholder="Phone"
 					value={phone}
 					onChangeText={setPhone}
+					keyboardType="phone-pad"
+					accessibilityLabel="Enter your phone number"
 				/>
 				<Button
 					title="Sign Up"
 					color="#4CAF50"
 					onPress={handleSignup}
+					accessibilityLabel="Sign up button"
 				/>
 			</View>
 		</View>

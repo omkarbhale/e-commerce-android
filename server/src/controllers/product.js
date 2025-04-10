@@ -39,8 +39,6 @@ const getAllProducts = async (req, res) => {
 			],
 		});
 
-		console.log(products[0].Business.name); // Debugging line
-
 		const productsWithBusiness = products.map((product) => ({
 			id: product.id,
 			name: product.name,

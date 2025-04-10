@@ -1,16 +1,16 @@
 import { View, Text, TextInput, Button, StyleSheet, Alert } from "react-native";
 import React, { useState } from "react";
-import { serverUrl, loggingEnabled } from "@/constants"; // Import serverUrl and loggingEnabled
-import { useAuth } from "@/contexts/AuthenticationContext"; // Import useAuth
+import { serverUrl, loggingEnabled } from "@/constants";
+import { useAuth } from "@/contexts/AuthenticationContext";
 import { useRouter } from "expo-router";
 
 export default function CustomerSignup() {
-	const router = useRouter(); // Initialize router
+	const router = useRouter();
 	const [name, setName] = useState("");
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 
-	const { login } = useAuth(); // Access login from context
+	const { login } = useAuth();
 
 	const handleSignup = async () => {
 		if (loggingEnabled) console.log("CustomerSignup: handleSignup called");
@@ -54,12 +54,16 @@ export default function CustomerSignup() {
 					placeholder="Name"
 					value={name}
 					onChangeText={setName}
+					accessibilityLabel="Enter your name"
 				/>
 				<TextInput
 					style={styles.input}
 					placeholder="Email"
 					value={email}
 					onChangeText={setEmail}
+					keyboardType="email-address"
+					autoCapitalize="none"
+					accessibilityLabel="Enter your email"
 				/>
 				<TextInput
 					style={styles.input}
@@ -67,11 +71,13 @@ export default function CustomerSignup() {
 					secureTextEntry={true}
 					value={password}
 					onChangeText={setPassword}
+					accessibilityLabel="Enter your password"
 				/>
 				<Button
 					title="Sign Up"
 					color="#4CAF50"
 					onPress={handleSignup}
+					accessibilityLabel="Sign up button"
 				/>
 			</View>
 		</View>
