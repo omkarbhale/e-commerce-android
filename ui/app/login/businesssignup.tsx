@@ -10,18 +10,22 @@ export default function BusinessSignup() {
 	const [name, setName] = useState("");
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
+	const [address, setAddress] = useState("");
+	const [phone, setPhone] = useState("");
 
 	const handleSignup = async () => {
 		if (loggingEnabled) console.log("BusinessSignup: handleSignup called");
 		if (loggingEnabled) console.log("BusinessSignup: name =", name);
 		if (loggingEnabled) console.log("BusinessSignup: email =", email);
 		if (loggingEnabled) console.log("BusinessSignup: password =", password);
+		if (loggingEnabled) console.log("BusinessSignup: address =", address);
+		if (loggingEnabled) console.log("BusinessSignup: phone =", phone);
 
 		try {
 			const response = await fetch(`${serverUrl}/auth/business/signup`, {
 				method: "POST",
 				headers: { "Content-Type": "application/json" },
-				body: JSON.stringify({ name, email, password }),
+				body: JSON.stringify({ name, email, password, address, phone }),
 			});
 			const data = await response.json();
 			if (loggingEnabled)
@@ -33,6 +37,8 @@ export default function BusinessSignup() {
 					id: data.business.id,
 					name: data.business.name,
 					email: data.business.email,
+					address: data.business.address,
+					phone: data.business.phone,
 				}); // Pass user object to context
 				Alert.alert("Success", "Signup successful");
 				router.replace("/customer/feed");
@@ -72,6 +78,18 @@ export default function BusinessSignup() {
 					secureTextEntry={true}
 					value={password}
 					onChangeText={setPassword}
+				/>
+				<TextInput
+					style={styles.input}
+					placeholder="Address"
+					value={address}
+					onChangeText={setAddress}
+				/>
+				<TextInput
+					style={styles.input}
+					placeholder="Phone"
+					value={phone}
+					onChangeText={setPhone}
 				/>
 				<Button
 					title="Sign Up"

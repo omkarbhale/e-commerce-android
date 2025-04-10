@@ -2,16 +2,20 @@ import React, { createContext, useState, useContext, ReactNode } from "react";
 
 type UserRole = "customer" | "business" | null;
 
+interface User {
+	id: number;
+	name: string;
+	email: string;
+	address?: string;
+	phone?: string;
+}
+
 interface AuthContextProps {
 	isLoggedIn: boolean;
 	role: UserRole;
 	token: string | null;
-	user: { id: number; name: string; email: string } | null; // Add user object
-	login: (
-		role: UserRole,
-		token: string,
-		user: { id: number; name: string; email: string },
-	) => void; // Update login signature
+	user: User | null; // Update user type to include optional address and phone
+	login: (role: UserRole, token: string, user: User) => void;
 	logout: () => void;
 }
 
@@ -25,17 +29,9 @@ export const AuthenticationProvider: React.FC<{ children: ReactNode }> = ({
 	const [isLoggedIn, setIsLoggedIn] = useState(false);
 	const [role, setRole] = useState<UserRole>(null);
 	const [token, setToken] = useState<string | null>(null);
-	const [user, setUser] = useState<{
-		id: number;
-		name: string;
-		email: string;
-	} | null>(null); // Add user state
+	const [user, setUser] = useState<User | null>(null); // Update user state type
 
-	const login = (
-		role: UserRole,
-		token: string,
-		user: { id: number; name: string; email: string },
-	) => {
+	const login = (role: UserRole, token: string, user: User) => {
 		setIsLoggedIn(true);
 		setRole(role);
 		setToken(token);

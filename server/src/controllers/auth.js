@@ -17,10 +17,10 @@ const generateToken = (user, role) => {
 };
 
 const businessSignup = async (req, res) => {
-	const { name, email, password } = req.body;
+	const { name, email, password, address, phone } = req.body;
 
 	try {
-		if (!name || !email || !password) {
+		if (!name || !email || !password || !address || !phone) {
 			throw new Error("Missing details");
 		}
 		const hashedPassword = await bcrypt.hash(password, 10);
@@ -34,6 +34,8 @@ const businessSignup = async (req, res) => {
 			name,
 			email,
 			password: hashedPassword,
+			address,
+			phone,
 		});
 		const token = generateToken(business, "business");
 		res.status(201).json({
@@ -42,6 +44,8 @@ const businessSignup = async (req, res) => {
 				id: business.id,
 				name: business.name,
 				email: business.email,
+				address: business.address,
+				phone: business.phone,
 			},
 			token,
 		});
